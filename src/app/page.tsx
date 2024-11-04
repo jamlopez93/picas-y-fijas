@@ -2,6 +2,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
+import Link from 'next/link';
 
 type Intento = {
   intento: string;
@@ -17,10 +18,12 @@ export default function PicasYFijas() {
   const [open, setOpen] = useState<boolean>(false);
   const maxIntentos = 12;
 
+  // Genera el número clave al cargar el componente
   useEffect(() => {
     setClave(generarNumeroClave());
   }, []);
 
+  // Función para generar el número clave con 4 dígitos únicos
   const generarNumeroClave = (): string => {
     let numeros: string[] = [];
     while (numeros.length < 4) {
@@ -30,6 +33,7 @@ export default function PicasYFijas() {
     return numeros.join('');
   };
 
+   // Función para manejar el intento del jugador
   const manejarIntento = () => {
     if (intento.length !== 4 || isNaN(Number(intento))) {
       setMensaje('Por favor ingresa un número de cuatro cifras.');
@@ -52,6 +56,7 @@ export default function PicasYFijas() {
     setIntento('');
   };
 
+   // Calcula cuántas picas y fijas hay en el intento actual
   const calcularPicasYFijas = (intento: string): { picas: number; fijas: number } => {
     let picas = 0;
     let fijas = 0;
@@ -65,6 +70,7 @@ export default function PicasYFijas() {
     return { picas, fijas };
   };
 
+  // Mensaje final basado en el número de intentos
   const mensajeFinal = (intentos: number): string => {
     if (intentos <= 2) return 'Excelente, eres un maestro estas fuera del alcance de los demás';
     if (intentos <= 4) return 'Muy bueno, puedes ser un gran competidor';
@@ -84,6 +90,11 @@ export default function PicasYFijas() {
   return (
     <>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+      <Link href="/laberinto">
+          <p className="absolute top-4 right-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
+            Ir al laberinto
+          </p>
+        </Link>
         <h1 className="text-3xl font-bold mb-6 text-blue-600">Juego de Picas y Fijas</h1>
         <p className="mb-4 text-gray-700">Intenta adivinar el número clave de cuatro cifras.</p>
         
